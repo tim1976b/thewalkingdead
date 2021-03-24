@@ -4,6 +4,8 @@ import { INDEX_TEMPLATE_FILENAME, PROJECT_TITLE } from "./src/common/constants";
 import webpackNodeExternals from "webpack-node-externals"
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import webpack from "webpack";
+import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
+
 const IS_PRODUCTION = process.env.BUILD_ENV;
 
 const babelConfig = (IS_SERVER: boolean) => ({
@@ -25,8 +27,8 @@ const clientConfig = {
 
     name: "client",
     mode: IS_PRODUCTION ? "production" : "development",
-    entry: ["/src/client/index.tsx", "webpack-hot-middleware/client"],
-    devtool: 'inline-source-map',
+    entry: IS_PRODUCTION ? ["/src/client/index.tsx"] : ["/src/client/index.tsx", "webpack-hot-middleware/client"],
+    devtool: IS_PRODUCTION ? 'nosources-source-map' : 'inline-source-map',
     output: {
         path: path.resolve(__dirname, "build/client"),
         filename: "[name].bundle.js",
@@ -63,9 +65,16 @@ const clientConfig = {
         }),
         new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ['build/client/*'] }),
         new webpack.HotModuleReplacementPlugin(),
-        // Use NoErrorsPlugin for webpack 1.x
-        //new webpack.NoEmitOnErrorsPlugin()
+        new BundleAnalyzerPlugin({
+            analyzerMode: 'disabled',
+            generateStatsFile: true,
+            statsOptions: { source: false }
+        })
     ],
+    optimization: {
+        runtimeChunk: "single",
+        splitChunks: { chunks: "all" },
+    },
     resolve: {
         extensions: [".ts", ".tsx", ".js"]
     },
@@ -75,7 +84,7 @@ const serverConfig = {
     name: "server",
     mode: IS_PRODUCTION ? "production" : "development",
     entry: { server: "/src/server/server.ts" },
-    devtool: 'inline-source-map',
+    devtool: IS_PRODUCTION ? 'nosources-source-map' : 'inline-source-map',
     target: "node",
     node: { __dirname: false },
     output: {
