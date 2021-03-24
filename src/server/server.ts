@@ -3,6 +3,8 @@ import webpack from 'webpack';
 import path from "path";
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webPackHotMiddleware from "webpack-hot-middleware";
+import webpackHotServerMiddleware from "webpack-hot-server-middleware";
+
 import webPackConfig from '../../webpack.config';
 import { PROJECT_TITLE } from "../common/constants";
 
@@ -26,6 +28,9 @@ if (IS_DEV_ENV) {
     if (clientCompiler) {
         app.use(webPackHotMiddleware(clientCompiler));
     }
+
+    app.use(webpackHotServerMiddleware(compiler));
+
 
 } else {
     app.use(express.static(path.resolve(__dirname, "../client/")));
