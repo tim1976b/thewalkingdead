@@ -13,7 +13,6 @@
     "dev-prod": "cross-env yarn build-prod && yarn start-prod",
     "analyze": "yarn build && webpack-bundle-analyzer --port 4222 build/client/stats.json",
     "analyze-prod": "yarn build-prod && webpack-bundle-analyzer --port 4222 build/client/stats.json"
-
   },
   "devDependencies": {
     "@babel/core": "^7.13.10",
@@ -46,6 +45,7 @@
     "webpack-node-externals": "^2.5.2"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.3",
     "core-js": "3",
     "express": "^4.17.1",
     "react": "^17.0.2",
