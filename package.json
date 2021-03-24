@@ -8,7 +8,9 @@
     "build-prod": "cross-env TS_NODE_PROJECT=tsconfig.webpack.json BUILD_ENV=production npx webpack --progress",
     "watch": "yarn build --watch",
     "start": "node build/server/server.bundle.js",
-    "dev":"cross-env yarn build && yarn start"
+    "start-prod": "cross-env BUILD_ENV=production node build/server/server.bundle.js",
+    "dev": "cross-env yarn build && yarn start",
+    "dev-prod": "cross-env yarn build-prod && yarn start-prod"
   },
   "devDependencies": {
     "@babel/core": "^7.13.10",
@@ -20,6 +22,8 @@
     "@types/react-dom": "^17.0.3",
     "@types/webpack": "^4.41.26",
     "@types/webpack-dev-middleware": "^4.1.0",
+    "@types/webpack-env": "^1.16.0",
+    "@types/webpack-hot-middleware": "^2.25.3",
     "@types/webpack-node-externals": "^2.5.0",
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^3.0.0",
@@ -32,28 +36,14 @@
     "webpack": "^4.5.0",
     "webpack-cli": "^4.5.0",
     "webpack-dev-middleware": "^4.1.0",
+    "webpack-hot-middleware": "^2.25.0",
     "webpack-node-externals": "^2.5.2"
   },
   "dependencies": {
-    "assert": "^2.0.0",
-    "browserify-zlib": "^0.2.0",
-    "buffer": "^6.0.3",
-    "console-browserify": "^1.2.0",
-    "constants-browserify": "^1.0.0",
     "core-js": "3",
-    "crypto-browserify": "^3.12.0",
     "express": "^4.17.1",
-    "https-browserify": "^1.0.0",
-    "os-browserify": "^0.3.0",
-    "path-browserify": "^1.0.1",
-    "process": "^0.11.10",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "stream-browserify": "^3.0.0",
-    "stream-http": "^3.1.1",
-    "tty-browserify": "^0.0.1",
-    "url": "^0.11.0",
-    "util": "^0.12.3",
-    "vm-browserify": "^1.1.2"
+    "react-hot-loader": "^4.13.0"
   }
 }

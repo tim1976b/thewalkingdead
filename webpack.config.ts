@@ -3,6 +3,7 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import { INDEX_TEMPLATE_FILENAME, PROJECT_TITLE } from "./src/common/constants";
 import webpackNodeExternals from "webpack-node-externals"
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
+import webpack from "webpack";
 const IS_PRODUCTION = process.env.BUILD_ENV;
 
 const babelConfig = (IS_SERVER: boolean) => ({
@@ -17,13 +18,14 @@ const babelConfig = (IS_SERVER: boolean) => ({
             "ie": "11"
         }
     }]],
+    // plugins: !IS_SERVER ? ["react-hot-loader/babel"] : []
 })
 
 const clientConfig = {
 
     name: "client",
     mode: IS_PRODUCTION ? "production" : "development",
-    entry: { client: "/src/client/index.tsx" },
+    entry: ["/src/client/index.tsx", "webpack-hot-middleware/client"],
     devtool: 'inline-source-map',
     output: {
         path: path.resolve(__dirname, "build/client"),
@@ -47,16 +49,23 @@ const clientConfig = {
             }
         ]
     },
-    plugins: [new HtmlWebpackPlugin({
-        template: `src/client/${INDEX_TEMPLATE_FILENAME}`,
-        filename: "index.html",
-        title: PROJECT_TITLE,
-        minify: IS_PRODUCTION ? {
-            minifyCSS: true,
-            minifyJS: true,
-            removeComments: true
-        } : false
-    }), new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ['build/client/*'] })],
+    plugins: [
+
+        new HtmlWebpackPlugin({
+            template: `src/client/${INDEX_TEMPLATE_FILENAME}`,
+            filename: "index.html",
+            title: PROJECT_TITLE,
+            minify: IS_PRODUCTION ? {
+                minifyCSS: true,
+                minifyJS: true,
+                removeComments: true
+            } : false
+        }),
+        new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ['build/client/*'] }),
+        new webpack.HotModuleReplacementPlugin(),
+        // Use NoErrorsPlugin for webpack 1.x
+        //new webpack.NoEmitOnErrorsPlugin()
+    ],
     resolve: {
         extensions: [".ts", ".tsx", ".js"]
     },
@@ -68,6 +77,7 @@ const serverConfig = {
     entry: { server: "/src/server/server.ts" },
     devtool: 'inline-source-map',
     target: "node",
+    node: { __dirname: false },
     output: {
         path: path.resolve(__dirname, "build/server"),
         filename: "[name].bundle.js",
