@@ -11,16 +11,10 @@ const IS_PRODUCTION = process.env.BUILD_ENV;
 const babelConfig = (IS_SERVER: boolean) => ({
     babelrc: false,
     presets: [["@babel/preset-react"], ["@babel/preset-env", {
-        // corejs: IS_SERVER ? undefined : "3.8",
-        // useBuiltIns: IS_SERVER ? false : "usage",
         targets: IS_SERVER ? {
             node: "current"
-        } : {
-            "chrome": "58",
-            "ie": "11"
-        }
+        } : "defaults"
     }]],
-    // plugins: !IS_SERVER ? ["react-hot-loader/babel"] : []
 })
 
 const clientConfig = {
