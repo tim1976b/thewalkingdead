@@ -5,7 +5,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import { Provider } from "react-redux"
 import theme from './theme';
 import { store } from "./store";
-import App from "./components/severity-level";
+import App from "./components/app";
 import { fetchHospitals } from "./actions/hospitals";
 import { fetchIllnesses } from "./actions/illnesses";
 

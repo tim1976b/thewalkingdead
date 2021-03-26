@@ -6,7 +6,7 @@ import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import webpack from "webpack";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 
-const IS_PRODUCTION = process.env.BUILD_ENV;
+const IS_PRODUCTION = !!process.env.BUILD_ENV;
 
 const babelConfig = (IS_SERVER: boolean) => ({
     babelrc: false,
@@ -22,7 +22,7 @@ const clientConfig = {
 
     name: "client",
     mode: IS_PRODUCTION ? "production" : "development",
-    entry: IS_PRODUCTION ? ["/src/client/index.tsx"] : ["/src/client/index.tsx", "webpack-hot-middleware/client"],
+    entry: ["/src/client/index.tsx", "webpack-hot-middleware/client"],
     devtool: IS_PRODUCTION ? 'nosources-source-map' : 'inline-source-map',
     output: {
         path: path.resolve(__dirname, "build/client"),
@@ -60,16 +60,16 @@ const clientConfig = {
         }),
         new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ['build/client/*'] }),
         new webpack.HotModuleReplacementPlugin(),
-        new BundleAnalyzerPlugin({
-            analyzerMode: 'disabled',
-            generateStatsFile: true,
-            statsOptions: { source: false }
-        })
+        // new BundleAnalyzerPlugin({
+        //     analyzerMode: 'disabled',
+        //     generateStatsFile: true,
+        //     statsOptions: { source: false }
+        // })
     ],
-    optimization: {
-        runtimeChunk: "single",
-        splitChunks: { chunks: "all" },
-    },
+    // optimization: {
+    //     runtimeChunk: "single",
+    //     splitChunks: { chunks: "all" },
+    // },
     resolve: {
         extensions: [".ts", ".tsx", ".js"]
     },

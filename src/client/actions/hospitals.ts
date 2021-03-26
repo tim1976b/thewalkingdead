@@ -4,9 +4,6 @@ enum HospitalActionTypes {
     FetchHospitals = "FETCH_HOSPITALS",
     HospitalFetched = "HOSPITALS_FETCHED"
 }
-export type FetchHospitalsAction = {
-    type: HospitalActionTypes.FetchHospitals;
-}
 
 export const FETCH_HOSPITALS = HospitalActionTypes.FetchHospitals;
 export const HOSPITALS_FETCHED = HospitalActionTypes.HospitalFetched;

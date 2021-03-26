@@ -8,9 +8,5 @@ enum IllnessesActionTypes {
 export const FETCH_ILLNESSES = IllnessesActionTypes.FetchIlnesses;
 export const ILLNESSES_FETCHED = IllnessesActionTypes.IllnessesFetched;
 
-// export type FetchIlnessesAction = {
-//     type: IllnessesActionTypes.FetchIlnesses;
-// }
-
 export const fetchIllnesses = createAction(FETCH_ILLNESSES);
 export const illnessesFetched = createAction(ILLNESSES_FETCHED);
