@@ -15,6 +15,7 @@ const babelConfig = (IS_SERVER: boolean) => ({
             node: "current"
         } : "defaults"
     }]],
+    plugins: ["@babel/plugin-transform-runtime"],
 })
 
 const clientConfig = {
