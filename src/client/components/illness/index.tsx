@@ -7,12 +7,11 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
 import { ReducerState } from "../../reducers";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { getIllnesses } from "../../selectors/illnesses";
-import { fetchIllnesses } from "../../actions/illnesses";
+import { fetchIllnesses, setIllness } from "../../actions/illnesses";
 import { ListItemSecondaryAction, IconButton } from "@material-ui/core";
 
 
@@ -23,11 +22,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-const Illnesses: FunctionComponent<{ illnesses: any, moveNext: () => any, fetchIllnesses: ({ page }: { page: number }) => any }> = ({ illnesses, moveNext, fetchIllnesses }) => {
+const Illnesses: FunctionComponent<{ setIllness: (id: number) => void, illnesses: any, moveNext: () => any, fetchIllnesses: ({ page }: { page: number }) => any }> = ({ setIllness, illnesses, moveNext, fetchIllnesses }) => {
     const classes = useStyles();
 
-    const setIllnessAndMoveNext = (ilnessId: number) => {
-        // setIllness(ilnessId);
+    const setIllnessAndMoveNext = (illnessId: number) => {
+        setIllness(illnessId);
         moveNext();
     }
     return (
@@ -49,7 +48,6 @@ const Illnesses: FunctionComponent<{ illnesses: any, moveNext: () => any, fetchI
                                     <ListItemSecondaryAction>
                                         <IconButton edge="end" aria-label="delete" onClick={() => { setIllnessAndMoveNext(illness.illness.id) }}>
                                             <ArrowForwardIosIcon color="primary" />
-
                                         </IconButton>
                                     </ListItemSecondaryAction>
                                 </ListItem>
@@ -64,7 +62,7 @@ const Illnesses: FunctionComponent<{ illnesses: any, moveNext: () => any, fetchI
 };
 
 const mapDispatchToProps = (dispatch: any) => {
-    return bindActionCreators({ moveNext, fetchIllnesses }, dispatch)
+    return bindActionCreators({ moveNext, fetchIllnesses, setIllness }, dispatch)
 }
 const mapStateToProps = (state: ReducerState) => ({
     illnesses: getIllnesses(state)

@@ -1,9 +1,9 @@
 import { handleActions } from "redux-actions";
-import { FETCH_ILLNESSES, ILLNESSES_FETCHED } from "../actions/illnesses"
+import { FETCH_ILLNESSES, ILLNESSES_FETCHED, SET_ILLNESS } from "../actions/illnesses"
 // XX fix types please....
 export type IllnessesState = { hasNext: boolean, illnesses: any, page: number, loading: boolean };
 export const illnessesReducer = handleActions<IllnessesState>({
-    // XXX use ES6 spread .... and append to illnesses list instead of override 
+
     [FETCH_ILLNESSES]: (state, action) => ({
         illnesses: state.illnesses,
         loading: true,
@@ -19,3 +19,13 @@ export const illnessesReducer = handleActions<IllnessesState>({
     })
 
 }, { hasNext: true, illnesses: [], page: 0, loading: false });
+
+
+
+export type SetIllnessState = number;
+export const setIlnessReducer = handleActions<SetIllnessState>({
+
+    [SET_ILLNESS]: (state, action) => (action.payload)
+
+}, -1);
+
