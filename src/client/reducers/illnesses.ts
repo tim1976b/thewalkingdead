@@ -4,23 +4,16 @@ import { FETCH_ILLNESSES, ILLNESSES_FETCHED, SET_ILLNESS } from "../actions/illn
 export type IllnessesState = { hasNext: boolean, illnesses: any, page: number, loading: boolean };
 export const illnessesReducer = handleActions<IllnessesState>({
 
-    [FETCH_ILLNESSES]: (state, action) => ({
-        illnesses: state.illnesses,
-        loading: true,
-        hasNext: state.hasNext,
-        page: state.page,
-
-    }),
-    [ILLNESSES_FETCHED]: (state, action) => ({
-        hasNext: action.payload.hasNext,
-        page: action.payload.page,
-        illnesses: state.illnesses.concat(action.payload.illnesses),
-        loading: false
-    })
+    [FETCH_ILLNESSES]: (state, action) => ({ ...state }),
+    [ILLNESSES_FETCHED]: (state, action) => (
+        {
+            ...action.payload,
+            loading: false,
+            illnesses: state.illnesses.concat(action.payload.illnesses)
+        }
+    )
 
 }, { hasNext: true, illnesses: [], page: 0, loading: false });
-
-
 
 export type SetIllnessState = number;
 export const setIlnessReducer = handleActions<SetIllnessState>({

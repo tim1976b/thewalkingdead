@@ -9,7 +9,8 @@ import App from "./components/app";
 import { fetchHospitals } from "./actions/hospitals";
 import { fetchIllnesses } from "./actions/illnesses";
 
-store.dispatch(fetchHospitals({ page: 0 }));
+// XXX inital fetch , check they dont block critical render path
+//store.dispatch(fetchHospitals({ page: 0 })); // XXX no need to initalally fetch hospitals , it's of dynamic nature and should be fetch and filtered by on user selection 
 store.dispatch(fetchIllnesses());
 
 render(

@@ -12,7 +12,7 @@ import { ReducerState } from "../../reducers";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { getIllnesses } from "../../selectors/illnesses";
 import { fetchIllnesses, setIllness } from "../../actions/illnesses";
-import { ListItemSecondaryAction, IconButton } from "@material-ui/core";
+import { ListItemSecondaryAction, IconButton, Typography } from "@material-ui/core";
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         backgroundColor: theme.palette.background.paper,
     },
 }));
+// XXX if initail fetch failed run another fetch in this component using useEffect or check InfiniteScroll if it can suppose inital fetch if list is empty
 
 const Illnesses: FunctionComponent<{ setIllness: (id: number) => void, illnesses: any, moveNext: () => any, fetchIllnesses: ({ page }: { page: number }) => any }> = ({ setIllness, illnesses, moveNext, fetchIllnesses }) => {
     const classes = useStyles();
@@ -44,7 +45,17 @@ const Illnesses: FunctionComponent<{ setIllness: (id: number) => void, illnesses
                         {illnesses.illnesses.map((illness: any) => (
                             <div key={illness.illness.id}>
                                 <ListItem>
-                                    <ListItemText primary={illness.illness.name} />
+                                    <ListItemText primary={
+                                        <React.Fragment>
+                                            <Typography
+                                                component="span"
+                                                variant="body2"
+                                                color="textPrimary"
+                                            >
+                                                {illness.illness.name}
+                                            </Typography>
+                                        </React.Fragment>
+                                    } />
                                     <ListItemSecondaryAction>
                                         <IconButton edge="end" aria-label="delete" onClick={() => { setIllnessAndMoveNext(illness.illness.id) }}>
                                             <ArrowForwardIosIcon color="primary" />

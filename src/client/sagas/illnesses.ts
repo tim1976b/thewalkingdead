@@ -11,7 +11,8 @@ export function* fetchIllnessesWatcher() {
             url: illnessesUrl,
             options: {},
             successAction: illnessesFetched,
-            failureAction: illnessesFetched,
+            refetchAction: undefined,
+            failureAction: illnessesFetched, // XXX create fetch error action
             action,
             responseProcessor
         })
@@ -23,6 +24,6 @@ const responseProcessor = ({ page, _embedded, _links }: { page: any, _embedded: 
     return {
         page: page.number,
         illnesses: _embedded.illnesses,
-        hasNext: !!_links.next
+        hasNext: !!_links.next,
     };
 }

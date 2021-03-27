@@ -1,16 +1,30 @@
 import { handleActions } from "redux-actions";
-import { FETCH_HOSPITALS, HOSPITALS_FETCHED } from "../actions/hospitals";
+import { FETCH_HOSPITALS, HOSPITALS_FETCHED, SELECT_HOSPITAL } from "../actions/hospitals";
 
-export type HospitalState = { hospitals: {} | undefined, loading: boolean };
+export type HospitalState = { hasNext: boolean, hospitals: any[], page: any, loading: boolean };
 export const hospitalsReducer = handleActions<HospitalState>({
-    // XXX use ES6 spread .... and append to hospital list instead of override 
-    [FETCH_HOSPITALS]: (state, action) => ({
-        hospitals: state.hospitals,
-        loading: true
-    }),
-    [HOSPITALS_FETCHED]: (state, action) => ({
-        hospitals: action.payload,
-        loading: false
-    })
-}, { hospitals: undefined, loading: false });
 
+    [FETCH_HOSPITALS]: (state, action) => ({ ...state }),
+    [HOSPITALS_FETCHED]: (state, action) => {
+
+        if (action.payload.page.number === 0) { // XXX reset hospital data if page 0 is requested again 
+            return {
+                ...action.payload,
+                hospitals: !action.payload.hasNext ? action.payload.hospitals : action.payload.hospitals.sort((a, b) => a.waitingTime - b.waitingTime)
+            }
+        } else {
+            return {
+                ...action.payload,
+                loading: false,
+                hospitals: action.payload.hasNext ? state.hospitals.concat(action.payload.hospitals) : state.hospitals.concat(action.payload.hospitals).sort((a, b) => a.waitingTime - b.waitingTime),
+            }
+        }
+    }
+}, { hasNext: true, hospitals: [], page: 0, loading: false });
+
+export type SelectHospitalState = number;
+export const selectHospitalReducer = handleActions<SelectHospitalState>({
+
+    [SELECT_HOSPITAL]: (state, action) => (action.payload)
+
+}, -1);
