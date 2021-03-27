@@ -48,12 +48,24 @@ const steps = [
     { label: 'Please select your pain level', component: <PainLevel /> },
     { label: 'Select an Illness', component: <Illness />, },
     { label: 'Suggested Hospitals', component: <Hospitals />, },
-    { label: 'Submit Your Infomration', component: <Form />, },
+    { label: 'Submit Your Information', component: <Form />, },
 ];
+
 
 
 const App: FunctionComponent<{ width: Breakpoint, pageData: number, moveNext: () => any, moveBack: () => any, reset: () => any }> = ({ width, pageData, moveNext, moveBack, reset }) => {
     const classes = useStyles();
+
+    const BackButton = ({ index }: { index: number }) => (
+        <Button
+            variant="contained"
+            disabled={index === 0}
+            onClick={moveBack}
+            className={classes.button}
+        >
+            Back
+        </Button>
+    )
 
     return (
         <>
@@ -78,21 +90,8 @@ const App: FunctionComponent<{ width: Breakpoint, pageData: number, moveNext: ()
                             <StepContent>
                                 {step.component}
                                 <div>
-                                    {/* <Button
-                                        variant="contained"
-                                        onClick={handleNext}
-                                        className={classes.button}
-                                    >
-                                        {index === steps.length - 1 ? 'Finish' : 'Continue'}
-                                    </Button> */}
-                                    {index > 0 && (<Button
-                                        variant="contained"
-                                        disabled={index === 0}
-                                        onClick={moveBack}
-                                        className={classes.button}
-                                    >
-                                        Back
-                                    </Button>
+                                    {(index > 0 && index !== (steps.length - 1)) && (
+                                        <BackButton index={index} />
                                     )}
                                 </div>
                             </StepContent>
@@ -105,21 +104,8 @@ const App: FunctionComponent<{ width: Breakpoint, pageData: number, moveNext: ()
                 <Paper className={classes.paper} elevation={0}>
                     {steps[pageData].component}
                     < div >
-                        {/* <Button
-                        variant="contained"
-                        onClick={moveNext}
-                        className={classes.button}
-                    >
-                        {pageData === steps.length - 1 ? 'Finish' : 'Continue'}
-                    </Button> */}
-                        {pageData > 0 && (<Button
-                            variant="contained"
-                            disabled={pageData === 0}
-                            onClick={moveBack}
-                            className={classes.button}
-                        >
-                            Back
-                        </Button>
+                        {(pageData > 0 && pageData !== (steps.length - 1)) && (
+                            <BackButton index={pageData} />
                         )}
                     </div>
                 </Paper>

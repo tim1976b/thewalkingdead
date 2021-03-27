@@ -18,10 +18,10 @@ type DoFetchPayload = {
 };
 
 const buildUrl = (url: string, payload?: Payload): string => {
-    if (!payload) {
-        return `${url}?limit=${pageSize}&page=0`
-    } else {
+    if (payload && payload.page) {
         return `${url}?limit=${pageSize}&page=${payload.page}`
+    } else {
+        return url;
     }
 }
 
@@ -29,13 +29,7 @@ export function* doFetch(doFetchPayload: DoFetchPayload) {
 
     const { url, options, successAction, failureAction, action, responseProcessor, refetchAction } = doFetchPayload;
     const builtUrl = buildUrl(url, action.payload);
-    const response: Response = yield call(fetch, builtUrl, {
-        method: "GET",
-        headers: {
-            "cache-control": "no-cache",
-        }
-    });
-
+    const response: Response = yield call(fetch, builtUrl, options);
 
     // XXX where is try ... catch ?
     if (response.status === 200) {

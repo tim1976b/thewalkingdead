@@ -53,7 +53,6 @@ const Hospitals: FunctionComponent<{ selectHospital: (id: number) => void, hospi
 
 
     const move = (param: GridRowParams, event: React.MouseEvent): void => {
-        console.warn(param, event);
         moveNext();
     }
 
