@@ -10,7 +10,7 @@ export class Patient {
     name: string;
 
     @Column()
-    infomration: string;
+    information: string;
 
     @Column()
     painLevelId: number;

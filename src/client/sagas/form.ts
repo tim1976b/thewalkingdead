@@ -9,6 +9,7 @@ import { getSelectedIllnesse } from "../selectors/illnesses";
 export function* submitFormWatcher() {
 
     yield takeLatest(SUBMIT_FORM, function* (action: AnyAction) {
+        const { payload: { name, information } } = action;
         yield doFetch({
             url: formUrl,
             options: {
@@ -18,15 +19,14 @@ export function* submitFormWatcher() {
                     mode: 'cors',
                     cache: 'no-cache',
                     credentials: 'same-origin',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        ...action,
-                        painLevelId: getPainLevel(store.getState()),
-                        selectedIlnessId: getSelectedIllnesse(store.getState())
-                    })
-                }
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name,
+                    information,
+                    painLevelId: getPainLevel(store.getState()),
+                    selectedIlnessId: getSelectedIllnesse(store.getState())
+                })
             },
             successAction: FormSubmitted,
             refetchAction: undefined,
@@ -35,3 +35,5 @@ export function* submitFormWatcher() {
         })
     });
 }
+
+

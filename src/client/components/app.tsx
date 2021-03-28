@@ -38,10 +38,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     actionsContainer: {
         marginBottom: theme.spacing(2),
-    },
-    resetContainer: {
-        padding: theme.spacing(3),
-    },
+    }
 }));
 
 const steps = [
@@ -77,13 +74,7 @@ const App: FunctionComponent<{ width: Breakpoint, pageData: number, moveNext: ()
             <Stepper activeStep={pageData} orientation={isWidthDown('xs', width) ? "vertical" : "horizontal"} >
                 {steps.map((step, index) => (
                     <Step key={step.label}>
-                        <StepLabel
-                        // optional={
-                        //     index === 2 ? (
-                        //         <Typography variant="caption">Last step</Typography>
-                        //     ) : null
-                        // }
-                        >
+                        <StepLabel >
                             {step.label}
                         </StepLabel>
                         {isWidthDown('xs', width) && (
@@ -111,17 +102,6 @@ const App: FunctionComponent<{ width: Breakpoint, pageData: number, moveNext: ()
                 </Paper>
             )}
 
-            {
-                pageData === steps.length && (
-                    <Paper square elevation={0} className={classes.resetContainer}>
-                        <Typography>Thank you for submitting your infomration!</Typography>
-                        <Button onClick={reset} className={classes.button}>
-                            Start agains
-                        {/* // XXX do we need that  */}
-                        </Button>
-                    </Paper>
-                )
-            }
         </>
     );
 }
