@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    
     "target": "ESNext",
     "module": "ESNext",
     "strict": true,
@@ -8,6 +9,9 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "noImplicitReturns": true,
+    "emitDecoratorMetadata": true, //TypeORM
+    "experimentalDecorators": true,//TypeORM
+    "strictPropertyInitialization": false,//TypeORM
     "jsx": "preserve",
     // "typeRoots": [],
     "baseUrl": ".",
@@ -21,3 +25,10 @@
   "include":["src/**/*"],
   "exclude": ["node_modules"],
 }
+
+
+
+// "lib": [
+//    "es5",
+//    "es6"
+// ],
