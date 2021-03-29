@@ -38,8 +38,8 @@ createConnection( // XXX change to config file instead
     app.use(helmet.contentSecurityPolicy({
         directives: {
             defaultSrc: ["'self'", "http://dmmw-api.australiaeast.cloudapp.azure.com:8080/illnesses", "http://dmmw-api.australiaeast.cloudapp.azure.com:8080/hospitals"],
-            styleSrc: ["'self'", "'unsafe-inline'"],
-            fontSrc: ["'self'", "'unsafe-inline'"]
+            styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+            fontSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://fonts.gstatic.com/"]
         }
     }));
     app.use(cors());
