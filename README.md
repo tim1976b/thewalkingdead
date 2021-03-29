@@ -35,3 +35,6 @@ localhost:3000/
 ```
 [GET]localhost:3000/patient/1
 ```
+
+# Note :
+This project was developed using macOs. It wasn't run or tested on a MS windows PC.
