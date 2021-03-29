@@ -15,7 +15,7 @@ import { DataGrid, GridColDef, GridRowParams } from '@material-ui/data-grid';
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
-        maxWidth: 300,
+        width: "100%",
         backgroundColor: theme.palette.background.paper,
     },
 }));
@@ -47,8 +47,8 @@ const Hospitals: FunctionComponent<{ selectHospital: (id: number) => void, hospi
         moveNext();
     }
     const columns: GridColDef[] = [
-        { field: 'name', headerName: 'Hospital', width: 200, disableColumnMenu: true, sortable: false, },
-        { field: 'waitingTime', headerName: 'Time(m)', width: 100, disableColumnMenu: true, sortable: false, },
+        { field: 'name', headerName: 'Hospital', flex: 2, disableColumnMenu: true, sortable: false, },
+        { field: 'waitingTime', headerName: 'Time(m)', flex: 1, disableColumnMenu: true, sortable: false, },
     ];
 
 
@@ -64,7 +64,7 @@ const Hospitals: FunctionComponent<{ selectHospital: (id: number) => void, hospi
         return (
             <div className={classes.root}>
                 <div style={{ height: 400, width: '100%' }}>
-                    <DataGrid rows={hospitals.hospitals} columns={columns} pageSize={5} onRowClick={move} disableColumnMenu={true} disableSelectionOnClick={true} />
+                    <DataGrid rows={hospitals.hospitals} columns={columns} pageSize={5} onRowClick={move} disableColumnMenu={true} />
                 </div>
             </div>
         )

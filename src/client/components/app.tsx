@@ -22,6 +22,11 @@ import Form from "./form";
 import { getPageData } from "./selectors";
 import { ReducerState } from "../reducers";
 import { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
+import Divider from '@material-ui/core/Divider';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
@@ -33,18 +38,27 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginRight: theme.spacing(1),
     },
     paper: {
+        display: "flex",
         padding: 24,
         alignItems: "center",
+        justifyContent: "center"
+
     },
     actionsContainer: {
         marginBottom: theme.spacing(2),
-    }
+    },
+    menuButton: {
+        marginRight: theme.spacing(2),
+    },
+    title: {
+        flexGrow: 1,
+    },
 }));
 
 const steps = [
     { label: 'Please select your pain level', component: <PainLevel /> },
     { label: 'Select an Illness', component: <Illness />, },
-    { label: 'Suggested Hospitals', component: <Hospitals />, },
+    { label: 'Select a Hospitals', component: <Hospitals />, },
     { label: 'Submit Your Information', component: <Form />, },
 ];
 
@@ -66,11 +80,19 @@ const App: FunctionComponent<{ width: Breakpoint, pageData: number, moveNext: ()
 
     return (
         <>
-            <AppBar position="static" className={classes.root}>
-                <Typography variant="subtitle2" >
-                    The Walking Dead
-                </Typography>
-            </AppBar>
+            <div className={classes.root}>
+                <AppBar position="static">
+                    <Toolbar>
+                        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                            <MenuIcon />
+                        </IconButton>
+                        <Typography variant="h6" className={classes.title}>
+                            {"The Walking Dead"}
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
+            </div>
+
             <Stepper activeStep={pageData} orientation={isWidthDown('xs', width) ? "vertical" : "horizontal"} >
                 {steps.map((step, index) => (
                     <Step key={step.label}>
@@ -92,14 +114,23 @@ const App: FunctionComponent<{ width: Breakpoint, pageData: number, moveNext: ()
             </Stepper>
 
             {!isWidthDown('xs', width) && (
-                <Paper className={classes.paper} elevation={0}>
-                    {steps[pageData].component}
-                    < div >
+                <><Divider variant="middle" />
+
+                    <Paper className={classes.paper} elevation={0}>
+
+                        {steps[pageData].component}
+
+
+                    </Paper>
+                    <Paper className={classes.paper} elevation={0}>
+
                         {(pageData > 0 && pageData !== (steps.length - 1)) && (
                             <BackButton index={pageData} />
                         )}
-                    </div>
-                </Paper>
+
+                    </Paper>
+
+                </>
             )}
 
         </>

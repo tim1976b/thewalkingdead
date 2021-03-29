@@ -17,7 +17,7 @@ import { ListItemSecondaryAction, IconButton, Typography } from "@material-ui/co
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
-        maxWidth: 300,
+        width: "100%",
         backgroundColor: theme.palette.background.paper,
     },
 }));
@@ -32,7 +32,7 @@ const Illnesses: FunctionComponent<{ setIllness: (id: number) => void, illnesses
     }
     return (
         <div className={classes.root}>
-            <div id="scrollableDiv" style={{ height: 300, overflow: "auto" }}>
+            <div id="scrollableDiv" style={{ height: 300, overflow: "auto", width: "100%" }}>
                 <InfiniteScroll
                     dataLength={illnesses.illnesses.length}
                     next={() => { fetchIllnesses({ page: ++illnesses.page }); }}
@@ -40,11 +40,11 @@ const Illnesses: FunctionComponent<{ setIllness: (id: number) => void, illnesses
                     loader={<h4>Loading...</h4>}
                     scrollableTarget="scrollableDiv"
                 >
-                    <List className={classes.root}>
+                    <List >
 
                         {illnesses.illnesses.map((illness: any) => (
                             <div key={illness.illness.id}>
-                                <ListItem>
+                                <ListItem onClick={() => { setIllnessAndMoveNext(illness.illness.id) }} divider  >
                                     <ListItemText primary={
                                         <React.Fragment>
                                             <Typography
