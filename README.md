@@ -16,7 +16,22 @@ yarn dev
 yarn dev-prod 
 ```
 
-## Running the tests
+## Frontebd URL
 ```
-yarn test 
+localhost:3000/
+```
+
+
+## Backend API
+```
+[POST]localhost:3000/patient
+{"name":"Chedwick Bosman","information":"Already dead","painLevelId":4,"selectedIlnessId":1}
+
+```
+```
+[GET]localhost:3000/patient
+
+```
+```
+[GET]localhost:3000/patient/1
 ```
