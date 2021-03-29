@@ -3,7 +3,7 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import { INDEX_TEMPLATE_FILENAME, PROJECT_TITLE } from "./src/common/constants";
 import webpackNodeExternals from "webpack-node-externals"
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
-import webpack from "webpack";
+import webpack, { DefinePlugin } from "webpack";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 
 const IS_PRODUCTION = !!process.env.BUILD_ENV;
@@ -22,7 +22,7 @@ const clientConfig = {
 
     name: "client",
     mode: IS_PRODUCTION ? "production" : "development",
-    entry: ["/src/client/index.tsx", "webpack-hot-middleware/client"],
+    entry: IS_PRODUCTION ? ["/src/client/index.tsx"] : ["/src/client/index.tsx", "webpack-hot-middleware/client"],
     devtool: IS_PRODUCTION ? 'nosources-source-map' : 'inline-source-map',
     output: {
         path: path.resolve(__dirname, "build/client"),
