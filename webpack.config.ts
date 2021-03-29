@@ -60,16 +60,16 @@ const clientConfig = {
         }),
         new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ['build/client/*'] }),
         new webpack.HotModuleReplacementPlugin(),
-        // new BundleAnalyzerPlugin({
-        //     analyzerMode: 'disabled',
-        //     generateStatsFile: true,
-        //     statsOptions: { source: false }
-        // })
+        new BundleAnalyzerPlugin({
+            analyzerMode: 'disabled',
+            generateStatsFile: true,
+            statsOptions: { source: false }
+        })
     ],
-    // optimization: {
-    //     runtimeChunk: "single",
-    //     splitChunks: { chunks: "all" },
-    // },
+    optimization: {
+        runtimeChunk: "single",
+        splitChunks: { chunks: "all" },
+    },
     resolve: {
         extensions: [".ts", ".tsx", ".js"]
     },
