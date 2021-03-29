@@ -59,7 +59,11 @@ const clientConfig = {
             } : false
         }),
         new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ['build/client/*'] }),
-        new webpack.HotModuleReplacementPlugin(),
+        IS_PRODUCTION ? new DefinePlugin({
+            'process.env': {
+                'NODE_ENV': JSON.stringify('production')
+            }
+        }) : new webpack.HotModuleReplacementPlugin(),
         new BundleAnalyzerPlugin({
             analyzerMode: 'disabled',
             generateStatsFile: true,
